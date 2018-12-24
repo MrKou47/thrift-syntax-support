@@ -1,4 +1,4 @@
-# thrift-syntax-support README
+# thrift-syntax-support
 
 This is the README for your extension "thrift-syntax-support". After writing up a brief description, we recommend including the following sections.
 
