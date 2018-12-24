@@ -34,6 +34,7 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
+    "update:tmfile": "curl https://raw.githubusercontent.com/textmate/thrift.tmbundle/master/Syntaxes/Thrift.tmLanguage -o ./syntaxes/Thrift.tmLanguage",
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
