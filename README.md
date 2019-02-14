@@ -1,18 +1,9 @@
 # thrift-syntax-support
 
-This is the README for your extension "thrift-syntax-support". After writing up a brief description, we recommend including the following sections.
+Thrift syntax support extension.
 
 ## Features
 
-
-## Known Issues
-
-
-## Release Notes
-
-
-### 1.0.0
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
+- Show Definitions of a Symbol
+- Code Completion Proposals
+- Hovers show information about the symbol/object that's below the mouse cursor

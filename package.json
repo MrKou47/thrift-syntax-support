@@ -4,6 +4,11 @@
   "description": "thrift sytax support",
   "version": "0.0.1",
   "publisher": "mrkou47",
+  "icon": "images/logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MrKou47/thrift-syntax-support.git"
+  },
   "engines": {
     "vscode": "^1.30.0"
   },
