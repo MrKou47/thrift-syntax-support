@@ -1,9 +1,8 @@
-'use strict';
 import { languages, DocumentFilter, ExtensionContext } from 'vscode';
 
 import ThriftDefineProvider from './DefineProvider';
 import ThriftHoverProvider from './HoverProvider';
-// import { parse, ThriftDocument } from '@creditkarma/thrift-parser';
+import ThriftCompletionItemProvider from './CompletionProvider';
 
 export function activate(context: ExtensionContext) {
   const langMode: DocumentFilter = { scheme: 'file', language: 'thrift' };
@@ -18,6 +17,12 @@ export function activate(context: ExtensionContext) {
     languages.registerHoverProvider(
       langMode,
       new ThriftHoverProvider()
+    )
+  );
+  context.subscriptions.push(
+    languages.registerCompletionItemProvider(
+      langMode,
+      new ThriftCompletionItemProvider(),
     )
   );
 }

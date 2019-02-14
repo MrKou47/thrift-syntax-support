@@ -1,28 +1,17 @@
-import { DefinitionProvider, TextDocument, Position, CancellationToken, Location, Uri, Range } from 'vscode';
-import * as fs from 'fs';
-import * as path from 'path';
+import { DefinitionProvider, TextDocument, Position, CancellationToken, Location, Uri } from 'vscode';
 import {
   parse,
   SyntaxType,
   TextLocation,
 } from '@creditkarma/thrift-parser';
-import { genZeroBasedNum, genASTHelper, wordNodeFilter, includeNodeFilter } from './utils';
+import { genRange, ASTHelper } from './utils';
 
 class ThriftDefineProvider implements DefinitionProvider {
   genLocation(loc: TextLocation, filePath: string) {
-    const { start, end } = loc;
-    const startPosition = new Position(
-      genZeroBasedNum(start.line),
-      genZeroBasedNum(start.column)
-    );
-    const endPosition = new Position(
-      genZeroBasedNum(end.line), 
-      genZeroBasedNum(end.column)
-    );
     return Promise.resolve(
       new Location(
         Uri.file(filePath),
-        new Range(startPosition, endPosition)
+        genRange(loc)
       )
     );
   }
@@ -36,16 +25,9 @@ class ThriftDefineProvider implements DefinitionProvider {
       if (thriftParseResult.type !== SyntaxType.ThriftDocument) {
         return Promise.resolve(null);
       }
-      const helper = genASTHelper(thriftParseResult);
-      const wordNodeList = helper(wordNodeFilter(word));
-      const includeNodeList = helper(includeNodeFilter()).map(item => {
-        const { value } = item.path;
-        return ({
-          ...item,
-          filePath: path.resolve(path.dirname(document.fileName), value),
-          fileName: path.parse(value).name,
-        });
-      });
+      const astHelper = new ASTHelper(thriftParseResult, document);
+      const wordNode = astHelper.findNodeByWord(word);
+      const includeNodeList = astHelper.includeNodes;
       // if focus on thrift file name, redirect to this thrift file.
       const pathItem = includeNodeList.find(item => item.fileName === word);
       if (pathItem) {
@@ -57,20 +39,15 @@ class ThriftDefineProvider implements DefinitionProvider {
         );
       }
       // if can find focused word in this file, autojump
-      if (wordNodeList.length) {
-        const { name: { loc } } = wordNodeList[0];
-        return this.genLocation(loc, filePath);
-      } else {
-        const includeNode = includeNodeList.find(item => {
-          const rawCode = fs.readFileSync(item.filePath, { encoding: 'utf8' });
-          return rawCode.indexOf(word) > -1;
-        });
-        if (includeNode) {
-          const rawCode = fs.readFileSync(includeNode.filePath, { encoding: 'utf8' });
-          return processor(rawCode, includeNode.filePath);
-        }
-        return Promise.resolve(null);
+      if (wordNode) return this.genLocation(wordNode.name.loc, filePath);
+      const includeNode = includeNodeList.find(item => {
+        return item.raw.indexOf(word) > -1;
+      });
+      if (includeNode) {
+        const { raw, filePath } = includeNode;
+        return processor(raw, filePath);
       }
+      return Promise.resolve(null);
     };
     return processor(rawFile, document.fileName);
     return new Promise(() => {});

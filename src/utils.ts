@@ -1,7 +1,12 @@
+import { Position, Range, TextDocument } from 'vscode';
+import * as path from 'path';
+import * as fs from 'fs';
 import {
   ThriftDocument,
   ThriftStatement,
   SyntaxType,
+  TextLocation,
+  IncludeDefinition,
 } from '@creditkarma/thrift-parser';
 
 export type filterFnType = (item: ThriftStatement, index: number) => any;
@@ -10,12 +15,6 @@ export type GetReturnType<original extends Function> =
   original extends (...x: any[]) => infer returnType ? returnType : never;
 
 export const genZeroBasedNum = (num: number) => num - 1;
-
-export const genASTHelper = (ast: ThriftDocument) =>
-  <fn extends filterFnType>(originalFn: fn) => {
-    const result = (ast.body.filter(originalFn) as GetReturnType<fn>[]);
-    return result;
-  };
 
 export const wordNodeFilter = (word: string) =>
   (item: ThriftStatement, index: number) => {
@@ -36,3 +35,72 @@ export const includeNodeFilter = () =>
       return item;
     }
   };
+
+export const genRange = (loc: TextLocation) => {
+  const { start, end } = loc;
+  const startPosition = new Position(
+    genZeroBasedNum(start.line),
+    genZeroBasedNum(start.column)
+  );
+  const endPosition = new Position(
+    genZeroBasedNum(end.line), 
+    genZeroBasedNum(end.column)
+  );
+  return new Range(startPosition, endPosition);
+};
+
+interface IncludeNode extends IncludeDefinition {
+  filePath: string;
+  fileName: string;
+  raw: string;
+}
+
+export class ASTHelper {
+  ast: ThriftDocument;
+  document: TextDocument;
+  readonly includeNodes: IncludeNode[];
+  constructor(ast: ThriftDocument, document: TextDocument) {
+    this.ast = ast;
+    this.document = document;
+    this.includeNodes = this._findIncludeNodes();
+  }
+
+  filter = <fn extends filterFnType>(originalFn: fn) => {
+    const result = (this.ast.body.filter(originalFn) as GetReturnType<fn>[]);
+    return result;
+  }
+
+  _findIncludeNodes = (): IncludeNode[] => {
+    const { filter, document } = this;
+    return filter(includeNodeFilter()).map(item => {
+      const { value } = item.path;
+      const filePath = path.resolve(path.dirname(document.fileName), value);
+      return ({
+        ...item,
+        filePath,
+        fileName: path.parse(value).name,
+        raw: fs.readFileSync(filePath, { encoding: 'utf8' }),
+      });
+    });
+  }
+
+  findNodesByInput = (input: string) => {
+    return this.filter((item, index) => {
+      if (
+        item.type !== SyntaxType.IncludeDefinition && 
+        item.type !== SyntaxType.CppIncludeDefinition &&
+        item.name.value.indexOf(input) > -1
+      ) {
+        return item;
+      }
+    });
+  }
+
+  findNodesByWord = (word: string) => {
+    return this.filter(wordNodeFilter(word));
+  }
+
+  findNodeByWord = (word: string) => {
+    return this.findNodesByWord(word)[0];
+  }
+}
