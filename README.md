@@ -2,13 +2,13 @@
 
 Thrift syntax support extension.
 
-## Features
+# Features
 
-### Basic syntax support
+## Basic syntax support
 ![](./images/basic-syntax-support.png)
-### Show Definitions of a Symbol
+## Show Definitions of a Symbol
 ![](./images/auto-jump.gif)
-### Code Completion Proposals
+## Code Completion Proposals
 ![](./images/auto-complete.gif)
-### Hovers show information about the symbol/object that's below the mouse cursor
+## Hovers show information about the symbol/object that's below the mouse cursor
 ![](./images/cursor.gif)

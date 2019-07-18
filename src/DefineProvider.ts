@@ -22,6 +22,7 @@ class ThriftDefineProvider implements DefinitionProvider {
     const rawFile = document.getText();
     const processor = (raw: string, filePath?: string): Thenable<Location | null> => {
       const thriftParseResult = parse(raw);
+      console.log(thriftParseResult);
       if (thriftParseResult.type !== SyntaxType.ThriftDocument) {
         return Promise.resolve(null);
       }

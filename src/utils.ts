@@ -52,7 +52,7 @@ export const genRange = (loc: TextLocation) => {
 interface IncludeNode extends IncludeDefinition {
   filePath: string;
   fileName: string;
-  raw: string;
+  raw?: string;
 }
 
 export class ASTHelper {
@@ -75,12 +75,17 @@ export class ASTHelper {
     return filter(includeNodeFilter()).map(item => {
       const { value } = item.path;
       const filePath = path.resolve(path.dirname(document.fileName), value);
-      return ({
+      const rebuildNode = ({
         ...item,
         filePath,
         fileName: path.parse(value).name,
-        raw: fs.readFileSync(filePath, { encoding: 'utf8' }),
       });
+      try {
+        (rebuildNode as IncludeNode).raw = fs.readFileSync(filePath, { encoding: 'utf8' });
+      } catch (error) {
+        console.log(error);
+      }
+      return rebuildNode;
     });
   }
 

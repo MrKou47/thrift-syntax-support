@@ -52,7 +52,10 @@ const keywords2CompletionItem = () =>
 class ThriftCompletionItemProvider implements CompletionItemProvider {
   provideCompletionItems(document: TextDocument, position: Position, token: CancellationToken):Thenable<CompletionItem[]> {
     const word = document.getText(document.getWordRangeAtPosition(position)).split(/\r?\n/)[0];
-    const raw = fs.readFileSync(document.fileName, { encoding: 'utf8' });
+    let raw = '';
+    try {
+      raw = fs.readFileSync(document.fileName, { encoding: 'utf8' });
+    } catch (error) {}
     const ast = parse(raw);
     const completionItems: CompletionItem[] = [];
     if (ast.type === SyntaxType.ThriftDocument) {

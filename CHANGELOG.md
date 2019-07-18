@@ -5,3 +5,7 @@
 
 ## [0.0.2]
 - Update README.md
+
+## [0.0.3]
+- Update README.md
+- add try...catch for fs.readFileSync
