@@ -55,6 +55,7 @@ class ThriftCompletionItemProvider implements CompletionItemProvider {
     let raw = '';
     try {
       raw = fs.readFileSync(document.fileName, { encoding: 'utf8' });
+    // eslint-disable-next-line no-empty
     } catch (error) {}
     const ast = parse(raw);
     const completionItems: CompletionItem[] = [];
@@ -72,11 +73,11 @@ class ThriftCompletionItemProvider implements CompletionItemProvider {
         keywords2CompletionItem(),
         completionItems,
       ])
-      .then(function (results) {
+        .then(function (results) {
           const suggestions = Array.prototype.concat.apply([], results);
           resolve(suggestions);
-      })
-      .catch(err => { reject(err); });
+        })
+        .catch(err => { reject(err); });
     });
   }
 }

@@ -42,14 +42,17 @@
     "update:tmfile": "curl https://raw.githubusercontent.com/textmate/thrift.tmbundle/master/Syntaxes/Thrift.tmLanguage -o ./syntaxes/Thrift.tmLanguage",
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "lint": "eslint --fix --quiet ./src"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.120",
     "@types/mocha": "^2.2.42",
     "@types/node": "^8.10.25",
-    "tslint": "^5.8.0",
-    "typescript": "^2.6.1",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
+    "typescript": "^4.0.3",
     "vscode": "^1.1.21"
   },
   "dependencies": {

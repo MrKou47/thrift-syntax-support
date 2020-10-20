@@ -51,7 +51,6 @@ class ThriftDefineProvider implements DefinitionProvider {
       return Promise.resolve(null);
     };
     return processor(rawFile, document.fileName);
-    return new Promise(() => {});
   }
 }
 
