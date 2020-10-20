@@ -11,7 +11,7 @@ import {
 
 export type filterFnType = (item: ThriftStatement, index: number) => any;
 
-export type GetReturnType<original extends Function> = 
+export type GetReturnType<original> = 
   original extends (...x: any[]) => infer returnType ? returnType : never;
 
 export const genZeroBasedNum = (num: number) => num - 1;
