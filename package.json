@@ -56,7 +56,7 @@
     "vscode": "^1.1.21"
   },
   "dependencies": {
-    "@creditkarma/thrift-parser": "^1.1.4",
+    "@creditkarma/thrift-parser": "^1.2.0",
     "lodash": "^4.17.13"
   }
 }
