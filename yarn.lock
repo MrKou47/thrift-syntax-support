@@ -23,9 +23,10 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@creditkarma/thrift-parser@^1.1.4":
-  version "1.1.4"
-  resolved "http://registry.npm.taobao.org/@creditkarma/thrift-parser/download/@creditkarma/thrift-parser-1.1.4.tgz#4926d96c4212aef8dce4eac873f6ab27aa52f464"
+"@creditkarma/thrift-parser@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npm.taobao.org/@creditkarma/thrift-parser/download/@creditkarma/thrift-parser-1.2.0.tgz#69b47dff3d2a5211e9417ff543ea65f681821906"
+  integrity sha1-abR9/z0qUhHpQX/1Q+pl9oGCGQY=
 
 "@eslint/eslintrc@^0.1.3":
   version "0.1.3"
@@ -77,9 +78,10 @@
   version "2.2.48"
   resolved "http://registry.npm.taobao.org/@types/mocha/download/@types/mocha-2.2.48.tgz#3523b126a0b049482e1c3c11877460f76622ffab"
 
-"@types/node@^8.10.25":
-  version "8.10.40"
-  resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-8.10.40.tgz#4314888d5cd537945d73e9ce165c04cc550144a4"
+"@types/node@^14.14.2":
+  version "14.14.2"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-14.14.2.tgz?cache=0&sync_timestamp=1603312659939&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.14.2.tgz#d25295f9e4ca5989a2c610754dc02a9721235eeb"
+  integrity sha1-0lKV+eTKWYmixhB1TcAqlyEjXus=
 
 "@typescript-eslint/eslint-plugin@^4.5.0":
   version "4.5.0"
