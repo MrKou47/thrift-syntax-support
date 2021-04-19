@@ -20,6 +20,15 @@
   ],
   "main": "./out/extension",
   "contributes": {
+    "configuration": {
+      "title": "Thrift Syntax Support",
+      "properties": {
+        "thrift.root": {
+          "type": "string",
+          "description": "Root path used for resolving include statements. Defaults to the focused file path."
+        }
+      }
+    },
     "languages": [
       {
         "id": "thrift",
