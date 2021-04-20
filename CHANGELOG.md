@@ -12,3 +12,6 @@
 
 ## [0.0.4]
 - Can jump to the Enum's member position
+
+## [0.0.6]
+- Adds `thrift.root` setting to configure where relative paths are resolved from
