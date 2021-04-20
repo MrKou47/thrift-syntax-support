@@ -1,4 +1,4 @@
-import { Position, Range, TextDocument } from 'vscode';
+import { Position, Range, TextDocument, workspace } from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import {
@@ -11,7 +11,7 @@ import {
 
 export type filterFnType = (item: ThriftStatement, index: number) => any;
 
-export type GetReturnType<original> = 
+export type GetReturnType<original> =
   original extends (...x: any[]) => infer returnType ? returnType : never;
 
 export const genZeroBasedNum = (num: number) => num - 1;
@@ -19,7 +19,7 @@ export const genZeroBasedNum = (num: number) => num - 1;
 export const wordNodeFilter = (word: string) =>
   (item: ThriftStatement, index: number) => {
     if (
-      item.type !== SyntaxType.IncludeDefinition && 
+      item.type !== SyntaxType.IncludeDefinition &&
       item.type !== SyntaxType.CppIncludeDefinition &&
       item.name.value === word
     ) {
@@ -43,7 +43,7 @@ export const genRange = (loc: TextLocation) => {
     genZeroBasedNum(start.column)
   );
   const endPosition = new Position(
-    genZeroBasedNum(end.line), 
+    genZeroBasedNum(end.line),
     genZeroBasedNum(end.column)
   );
   return new Range(startPosition, endPosition);
@@ -74,7 +74,9 @@ export class ASTHelper {
     const { filter, document } = this;
     return filter(includeNodeFilter()).map(item => {
       const { value } = item.path;
-      const filePath = path.resolve(path.dirname(document.fileName), value);
+      const thriftRoot = workspace.getConfiguration('thrift').get<string>('root')
+          || path.dirname(document.fileName);
+      const filePath = path.resolve(thriftRoot, value);
       const rebuildNode = ({
         ...item,
         filePath,
@@ -92,7 +94,7 @@ export class ASTHelper {
   findNodesByInput = (input: string) => {
     return this.filter((item, index) => {
       if (
-        item.type !== SyntaxType.IncludeDefinition && 
+        item.type !== SyntaxType.IncludeDefinition &&
         item.type !== SyntaxType.CppIncludeDefinition &&
         item.name.value.indexOf(input) > -1
       ) {
