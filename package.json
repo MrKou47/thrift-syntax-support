@@ -34,7 +34,8 @@
         "id": "thrift",
         "extensions": [
           ".thrift"
-        ]
+        ],
+        "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
