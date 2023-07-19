@@ -44,7 +44,7 @@ class ThriftDefineProvider implements DefinitionProvider {
       const prevWordNode = astHelper.findNodeByWord(prevWord);
       const includeNodeList = astHelper.includeNodes;
       /**
-       * If prev word is an enum define, jump to the enum member defined position.
+       * If the previous word is an enumerated define, jump to the enumerated member defined position.
        * e.g. Worker.ENGINEER -> jump to the ENGINEER defined line
        */
       if (prevWordNode && prevWordNode.type === 'EnumDefinition') {
@@ -54,6 +54,7 @@ class ThriftDefineProvider implements DefinitionProvider {
         }
       }
       // if focus on thrift file name, redirect to this thrift file.
+      // e.g. include "Worker.thrift" -> jump to the Worker.thrift file
       const pathItem = includeNodeList.find(item => item.fileName === word);
       if (pathItem) {
         return Promise.resolve(
@@ -63,7 +64,8 @@ class ThriftDefineProvider implements DefinitionProvider {
           )
         );
       }
-      // if can find focused word in this file, autojump
+      // If can find a focused word in this file, automatically jump to it.
+      // e.g. struct Worker -> jump to the struct Worker defined line
       if (wordNode) return this.genLocation(wordNode.name.loc, filePath);
       const includeNode = includeNodeList.find(item => {
         return item.raw.indexOf(word) > -1;

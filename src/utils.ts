@@ -1,4 +1,4 @@
-import { Position, Range, TextDocument, workspace } from 'vscode';
+import { Position, Range, TextDocument, workspace, Location, Uri } from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import {
@@ -36,6 +36,7 @@ export const includeNodeFilter = () =>
     }
   };
 
+  
 export const genRange = (loc: TextLocation) => {
   const { start, end } = loc;
   const startPosition = new Position(
@@ -58,11 +59,20 @@ interface IncludeNode extends IncludeDefinition {
 export class ASTHelper {
   ast: ThriftDocument;
   document: TextDocument;
+  filePath?: string;
   readonly includeNodes: IncludeNode[];
-  constructor(ast: ThriftDocument, document: TextDocument) {
+  constructor(ast: ThriftDocument, document: TextDocument, filePath?: string) {
     this.ast = ast;
     this.document = document;
+    this.filePath = filePath;
     this.includeNodes = this._findIncludeNodes();
+  }
+
+  genLocation(loc: TextLocation) {
+    return new Location(
+      Uri.file(this.filePath),
+      genRange(loc)
+    );
   }
 
   filter = <fn extends filterFnType>(originalFn: fn) => {

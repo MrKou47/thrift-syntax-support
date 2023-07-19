@@ -609,12 +609,12 @@
 								<dict>
 									<key>begin</key>
 									<string>(?x)(?&lt;!\S)
-											(oneway(?!\S))?\s*
+											(async(?!\S))?\s*
 											(?&lt;ft&gt;
 												map\s*&lt;\s*\g&lt;ft&gt;\s*,\s*\g&lt;ft&gt;\s*&gt; |
 												set\s*&lt;\s*\g&lt;ft&gt;\s*&gt; |
 												list\s*&lt;\s*\g&lt;ft&gt;\s*&gt;\s*(cpp_type(?!\S))? |
-												(?!oneway\b)[a-zA-Z_][\w.]*
+												(?!async\b)[a-zA-Z_][\w.]*
 											)\s*
 											(?:
 												(?&lt;!\S)([a-zA-Z_][\w.]*)\s*(?![^\s(])
@@ -624,7 +624,7 @@
 										<key>1</key>
 										<dict>
 											<key>name</key>
-											<string>keyword.other.oneway.thrift</string>
+											<string>keyword.other.async.thrift</string>
 										</dict>
 										<key>2</key>
 										<dict>
