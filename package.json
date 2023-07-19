@@ -10,7 +10,7 @@
     "url": "https://github.com/MrKou47/thrift-syntax-support.git"
   },
   "engines": {
-    "vscode": "^1.30.0"
+    "vscode": "^1.80.0"
   },
   "categories": [
     "Programming Languages"
