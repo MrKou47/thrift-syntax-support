@@ -2,7 +2,7 @@
   "name": "thrift-syntax-support",
   "displayName": "Thrift Syntax Support",
   "description": "thrift syntax support",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "publisher": "mrkou47",
   "icon": "images/logo.png",
   "repository": {
