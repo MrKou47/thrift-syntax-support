@@ -1007,6 +1007,15 @@
 							<string>punctuation.definition.string.end.thrift</string>
 						</dict>
 					</dict>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>name</key>
+							<string>constant.character.escape.example</string>
+							<key>match</key>
+							<string>\\.</string>
+						</dict>
+					</array>
 					<key>name</key>
 					<string>string.quoted.single.thrift</string>
 				</dict>
@@ -1028,9 +1037,18 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.begin.thrift</string>
+							<string>punctuation.definition.string.end.thrift</string>
 						</dict>
 					</dict>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>name</key>
+							<string>constant.character.escape.example</string>
+							<key>match</key>
+							<string>\\.</string>
+						</dict>
+					</array>
 					<key>name</key>
 					<string>string.quoted.double.thrift</string>
 				</dict>
