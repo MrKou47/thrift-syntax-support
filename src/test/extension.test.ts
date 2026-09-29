@@ -7,6 +7,6 @@ suite('Util tests', function () {
 
   // Defines a Mocha unit test
   test('genZeroBasedNum', function () {
-    assert.equal(genZeroBasedNum(2), 1);
+    assert.strictEqual(genZeroBasedNum(2), 1);
   });
 });

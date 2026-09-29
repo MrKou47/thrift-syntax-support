@@ -4,6 +4,7 @@ import ThriftDefineProvider from './DefineProvider';
 import ThriftHoverProvider from './HoverProvider';
 import ThriftCompletionItemProvider from './CompletionProvider';
 import ThriftSymbolProvider from './SymbolProvider';
+import ThriftReferenceProvider from './ReferenceProvider';
 
 export function activate(context: ExtensionContext): void {
   const langMode: DocumentFilter = { scheme: 'file', language: 'thrift' };
@@ -36,5 +37,9 @@ export function activate(context: ExtensionContext): void {
       langMode,
       new ThriftSymbolProvider()
     )
+  );
+  
+  context.subscriptions.push(
+    languages.registerReferenceProvider(langMode, new ThriftReferenceProvider())
   );
 }
